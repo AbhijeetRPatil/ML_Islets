@@ -7,7 +7,7 @@ Some of the key packages used are mentioned below-
   ```install.packages("xgboost")```
   ```install.packages("e1071")```
   ```install.packages("foreach")```
-  ```install.packages("doParallel")```
+  ```install.packages("doParallel")``` and others.
 
 ## Data
 The processed scRNA-seq dataset (Seurat .RDS object) can be found here: https://hpap.pmacs.upenn.edu/analysis.  
