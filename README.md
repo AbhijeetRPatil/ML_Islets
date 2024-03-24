@@ -26,4 +26,4 @@ The libraries folder contains the dependencies for the above scripts for generat
 This folder contains all the scripts used to generate the figures and tables in the manuscript.
 
 ## Publication to cite
-Patil et al. (2024)  Modeling Type 1 Diabetes progression using machine-learning and single-cell transcriptomic measurements in human islets. Cell Reports Medicine 2024 (Accepted in principle).
+Patil et al. (2024)  Modeling Type 1 Diabetes progression using machine-learning and single-cell transcriptomic measurements in human islets. Cell Reports Medicine 2024 (Accepted in principle). Link/DOI will be updated soon.
