@@ -1,0 +1,256 @@
+library("xgboost")  # the main algorithm
+library("caret")    # for the confusionmatrix() function (also needs e1071 package)
+library("dplyr")    # for some data preperation
+library("Ckmeans.1d.dp") # for xgb.ggplot.importance
+library("Matrix")
+library("Seurat")
+library("parallel")
+## current working directory 
+setwd("/mnt/alvand/abhijeet/aab/apr_WO-T2D/ml/res/")
+
+## Load all funcitons
+source("/Libraries/celltypes_data_gen_t1dvsctrl.R")
+
+# set random seed
+set.seed(888)
+##############################################################################################################################
+##------------------------------------------------- main resampling methods  ---------------------------------------------##
+##############################################################################################################################
+
+freq.matrix = function(train_matrix, test_matrix, method, ncores, train.y, test.y)
+{
+  ## XGB
+  if(method=="xgb")
+  {
+    best_param = list()
+    best_seednumber = 8888
+    best_logloss = Inf
+    best_logloss_index = 0
+    
+    for (iter in 1:10) {
+      param <- list(objective = "binary:logistic",
+                    eval_metric = "logloss",
+                    max_depth = sample(3:7, 1),
+                    eta = runif(1, .01, .3),
+                    gamma = runif(1, 0.0, 0.2), 
+                    subsample = runif(1, .5, .8),
+                    colsample_bytree = runif(1, .5, .8), 
+                    min_child_weight = sample(1:30, 1)
+                    # max_delta_step = sample(1:10, 1)
+      )
+      cv.nround = 200
+      cv.nfold = 5
+      seed.number = sample.int(10000, 1)[[1]]
+      set.seed(seed.number)
+      mdcv <- xgb.cv(data=train_matrix, params = param, nthread=ncores, 
+                     nfold=cv.nfold, nrounds=cv.nround,
+                     verbose = T, print_every_n = 50, 
+                     early_stopping_rounds=100, maximize=FALSE)
+      min_logloss = min(mdcv$evaluation_log[, test_logloss_mean])
+      min_logloss_index = which.min(mdcv$evaluation_log[, test_logloss_mean])
+      # min_logloss_index <- mdcv$best_iteration
+      if (min_logloss < best_logloss) {
+        best_logloss = min_logloss
+        best_logloss_index = min_logloss_index
+        best_seednumber = seed.number
+        best_param = param
+      }
+    }
+    
+    nround = best_logloss_index
+    print(best_logloss_index)
+    set.seed(best_seednumber)
+    bst_model <- xgb.train(data=train_matrix, params=best_param, nrounds=nround, nthread=ncores)
+    
+    # Predict hold-out test set
+    test_pred <- predict(bst_model, newdata = test_matrix)
+    test_pred <- ifelse (test_pred > 0.5,1,0)
+    ## confusion matrix
+    library(caret)
+    conf_mat <- confusionMatrix (as.factor(test_pred), as.factor(test.y))
+    ## accuracy
+    acc <- conf_mat$overall[[1]]
+    ## sensitivity
+    sens <- conf_mat$byClass[[1]]
+    ## specificity
+    spec <- conf_mat$byClass[[2]]
+    ## metrics
+    perf <- c(acc, sens, spec)    
+    ## variable importance 
+    total_genes <- colnames(train_matrix)
+    importance_matrix = xgb.importance(feature_names = total_genes, model = bst_model)
+    selected_genes <- importance_matrix$Feature
+  }
+  return(list(selected_genes, perf))
+}
+
+resampling = function(data, y, method,ncores)
+{
+  ## resampling
+  ############## Split data into training and testing ###########################
+  s.idx <- sample(1:nrow(data),as.integer(nrow(data)*.7),replace = F)
+  
+  train.x <- data[s.idx,]; train.y <- y[s.idx]
+  test.x <-  data[-s.idx,]; test.y <-  y[-s.idx]
+  
+  ## Prepare train matrix
+  train_matrix <- xgb.DMatrix(data = train.x, label = train.y)
+  ## Prepare test matrix
+  test_matrix <- xgb.DMatrix(data = test.x, label = test.y)
+  
+  ## xgb
+  if(method=="xgb")
+  {
+    obj = freq.matrix(train_matrix, test_matrix, method, ncores, train.y, test.y)
+  }
+  # return frequency matrix and coefficients matrix
+  return(obj)
+}
+
+#################################################################
+resampling_results = function(data,y,method,iter,ncores)
+{
+  # 100 resampling
+  # return two lists each of which includes frequency and coefficients
+  # for each variables
+  mat0 = list()
+  mat1 = matrix(0,nrow=iter,ncol=3)
+  for(i in 1:iter)  ###########################################
+  {
+    # resampling
+    obj0 = resampling(data,y,method,ncores)
+    print(paste0("Iteration ", i, " is completed"))
+    mat0[[i]] = obj0[[1]]
+    print(paste0("The output of Iteration ", i, " is ", obj0[[2]]))
+    mat1[i,] = obj0[[2]]
+  }
+  metric.vec = apply(mat1,2,mean)
+  sd.vec = apply(mat1,2,sd)
+  
+  return(list(mat0,mat1,metric.vec, sd.vec))
+}
+
+main = function(data,y,method,iter, ncores)
+{
+  results = resampling_results(data,y,method,iter,ncores)
+  mu.vec     = results[[1]]
+  mat1 = results[[2]]
+  metric.vec = results[[3]]
+  sd.vec = results[[4]]
+  return(list(mu.vec, mat1, metric.vec, sd.vec))
+}
+dat <- data.gen()
+iter=100
+ncores=30
+
+## alpha
+start_time <- Sys.time()
+print(paste0("Job sarted at ", start_time))
+filename="alpha_xgb_t1dvsctrl.rds"
+alpha <- dat$alpha
+output <- main(alpha[[1]], alpha[[2]], "xgb", iter, ncores)
+saveRDS(output, filename)
+rm(alpha)
+end_time <- Sys.time()
+print(paste0("Job completed at ", end_time))
+total_time <- end_time - start_time
+total_time
+print(paste0("Total time taken is ", end_time))
+
+## beta
+start_time <- Sys.time()
+print(paste0("Job sarted at ", start_time))
+filename="beta_xgb_t1dvsctrl.rds"
+beta <- dat$beta
+output <- main(beta[[1]], beta[[2]], "xgb", iter, ncores)
+saveRDS(output, filename)
+rm(beta)
+end_time <- Sys.time()
+print(paste0("Job completed at ", end_time))
+total_time <- end_time - start_time
+total_time
+print(paste0("Total time taken is ", end_time))
+
+## acinar
+start_time <- Sys.time()
+print(paste0("Job sarted at ", start_time))
+filename="acinar_xgb_t1dvsctrl.rds"
+acinar <- dat$acinar
+output <- main(acinar[[1]], acinar[[2]], "xgb", iter, ncores)
+saveRDS(output, filename)
+rm(acinar)
+end_time <- Sys.time()
+print(paste0("Job completed at ", end_time))
+total_time <- end_time - start_time
+total_time
+print(paste0("Total time taken is ", end_time))
+
+## ductal
+start_time <- Sys.time()
+print(paste0("Job sarted at ", start_time))
+filename="ductal_xgb_t1dvsctrl.rds"
+ductal <- dat$ductal
+output <- main(ductal[[1]], ductal[[2]], "xgb", iter, ncores)
+saveRDS(output, filename)
+rm(ductal)
+end_time <- Sys.time()
+print(paste0("Job completed at ", end_time))
+total_time <- end_time - start_time
+total_time
+print(paste0("Total time taken is ", end_time))
+
+## immune
+start_time <- Sys.time()
+print(paste0("Job sarted at ", start_time))
+filename="immune_xgb_t1dvsctrl.rds"
+immune <- dat$immune
+output <- main(immune[[1]], immune[[2]], "xgb", iter, ncores) 
+saveRDS(output, filename)
+rm(immune)
+end_time <- Sys.time()
+print(paste0("Job completed at ", end_time))
+total_time <- end_time - start_time
+total_time
+print(paste0("Total time taken is ", end_time))
+
+## delta
+start_time <- Sys.time()
+print(paste0("Job sarted at ", start_time))
+filename="delta_xgb_t1dvsctrl.rds"
+delta <- dat$delta
+output <- main(delta[[1]], delta[[2]], "xgb", iter, ncores) 
+saveRDS(output, filename)
+rm(delta)
+end_time <- Sys.time()
+print(paste0("Job completed at ", end_time))
+total_time <- end_time - start_time
+total_time
+print(paste0("Total time taken is ", end_time))
+
+## endothelial
+start_time <- Sys.time()
+print(paste0("Job sarted at ", start_time))
+filename="endothelial_xgb_t1dvsctrl.rds"
+endothelial <- dat$endothelial
+output <- main(endothelial[[1]], endothelial[[2]], "xgb", iter, ncores) 
+saveRDS(output, filename)
+rm(endothelial)
+end_time <- Sys.time()
+print(paste0("Job completed at ", end_time))
+total_time <- end_time - start_time
+total_time
+print(paste0("Total time taken is ", end_time))
+
+## stellates
+start_time <- Sys.time()
+print(paste0("Job sarted at ", start_time))
+filename="stellates_xgb_t1dvsctrl.rds"
+stellates <- dat$stellates
+output <- main(stellates[[1]], stellates[[2]], "xgb", iter, ncores) 
+saveRDS(output, filename)
+rm(stellates)
+end_time <- Sys.time()
+print(paste0("Job completed at ", end_time))
+total_time <- end_time - start_time
+total_time
+print(paste0("Total time taken is ", end_time))
