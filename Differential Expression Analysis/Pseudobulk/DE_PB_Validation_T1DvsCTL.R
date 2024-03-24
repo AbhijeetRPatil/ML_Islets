@@ -2,7 +2,7 @@ rm(list=ls())
 options(future.globals.maxSize = 1000000 * 1024^2)
 library(Seurat)
 # pseudobulk the counts based on donor-condition-celltype
-dat <- readRDS('/mnt/alvand/abhijeet/aab/apr_WO-T2D/objs/4_donors/results/12.04.23/panc_WO_RB_MT_validation_n4_12042023.rds')
+dat <- readRDS('panc.rds')
 dat$disease_state <- dat$grp
 dat$disease_id <- dat$sample_ids
 ## T1D vs Control
@@ -76,23 +76,20 @@ write.csv(PB_DE.Beta, './PB_DE_T1DvsCTL_valid_Beta.csv')
 
 
 
-
-
-
-
-rm(list=ls())
-options(future.globals.maxSize = 1000000 * 1024^2)
-library(Seurat)
-# pseudobulk the counts based on donor-condition-celltype
-dat <- readRDS('/mnt/alvand/abhijeet/aab/apr_WO-T2D/objs/4_donors/results/12.04.23/panc_WO_RB_MT_validation_n4_12042023.rds')
-dat$disease_state <- dat$grp
-dat$disease_id <- dat$sample_ids
-## T1D vs Control
-dat_T1DvsCTL <- subset(dat, subset = disease_state != "AAB")
-dat_T1DvsCTL_beta <- subset(dat_T1DvsCTL, subset = cell_type == "Beta")
-# saveRDS(dat_T1DvsCTL_beta, "/mnt/alvand/abhijeet/aab/apr_WO-T2D/ml/res/DE/T1DvsCTL_beta.rds")
-dat_T1DvsCTL_beta$cell_type <- droplevels(dat_T1DvsCTL_beta$cell_type)
-dat_T1DvsCTL_beta$cell_type.disease_state <- paste(dat_T1DvsCTL_beta$cell_type, dat_T1DvsCTL_beta$disease_state, sep = "_")
-Idents(dat_T1DvsCTL_beta) <- "cell_type.disease_state"
-dat_T1DvsCTL_beta.DE <- FindMarkers(dat_T1DvsCTL_beta, ident.1 = "Beta_T1D", ident.2 = "Beta_CTL", min.pct = 0, logfc.threshold = 0, verbose = FALSE)
-write.csv(dat_T1DvsCTL_beta.DE, './DE_T1DvsCTL_valid_Beta.csv')
+## For Individual cells
+# rm(list=ls())
+# options(future.globals.maxSize = 1000000 * 1024^2)
+# library(Seurat)
+# # pseudobulk the counts based on donor-condition-celltype
+# dat <- readRDS('panc.rds')
+# dat$disease_state <- dat$grp
+# dat$disease_id <- dat$sample_ids
+# ## T1D vs Control
+# dat_T1DvsCTL <- subset(dat, subset = disease_state != "AAB")
+# dat_T1DvsCTL_beta <- subset(dat_T1DvsCTL, subset = cell_type == "Beta")
+# # saveRDS(dat_T1DvsCTL_beta, "/mnt/alvand/abhijeet/aab/apr_WO-T2D/ml/res/DE/T1DvsCTL_beta.rds")
+# dat_T1DvsCTL_beta$cell_type <- droplevels(dat_T1DvsCTL_beta$cell_type)
+# dat_T1DvsCTL_beta$cell_type.disease_state <- paste(dat_T1DvsCTL_beta$cell_type, dat_T1DvsCTL_beta$disease_state, sep = "_")
+# Idents(dat_T1DvsCTL_beta) <- "cell_type.disease_state"
+# dat_T1DvsCTL_beta.DE <- FindMarkers(dat_T1DvsCTL_beta, ident.1 = "Beta_T1D", ident.2 = "Beta_CTL", min.pct = 0, logfc.threshold = 0, verbose = FALSE)
+# write.csv(dat_T1DvsCTL_beta.DE, './DE_T1DvsCTL_valid_Beta.csv')
