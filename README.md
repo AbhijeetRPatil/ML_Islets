@@ -2,7 +2,8 @@
 
 This repository contains codes for the manuscript titled Modeling Type 1 Diabetes progression using machine-learning and single-cell transcriptomic measurements in human islets.
 
-Workflow-
+Workflow is as follows:
+
 ![pipeline](https://github.com/AbhijeetRPatil/ML_Islets/assets/33159736/7aa0dfc3-5279-4569-b612-f1b77ec92e12)
 
 
