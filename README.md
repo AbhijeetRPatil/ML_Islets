@@ -1,6 +1,10 @@
 # Modeling Type 1 Diabetes progression using machine-learning and single-cell transcriptomic measurements in human islets
 
-This repository contains codes for the manuscript titled above. 
+This repository contains codes for the manuscript titled Modeling Type 1 Diabetes progression using machine-learning and single-cell transcriptomic measurements in human islets.
+
+Workflow-
+![pipeline](https://github.com/AbhijeetRPatil/ML_Islets/assets/33159736/f14b99bf-0875-4739-b113-f4876790f149)
+
 
 ## R version and packages
 R v 4.1.2 was used to develop the models. All the package versions can be found in the manuscript.
