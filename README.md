@@ -10,8 +10,7 @@ Some of the key packages used are mentioned below-
   ```install.packages("doParallel")```
 
 ## Data
-The processed scRNA-seq dataset can be found here: https://hpap.pmacs.upenn.edu/  
-Users can load the processed single-cell RNA_seq data (Seurat .RDS object).
+The processed scRNA-seq dataset (Seurat .RDS object) can be found here: https://hpap.pmacs.upenn.edu/analysis.  
 
 ## Differential Expression Analysis scripts
 The Differential Expression Analysis folder contains the scripts for performing differential expression analysis on either all cells (unannotated) or Pseudobulk.
