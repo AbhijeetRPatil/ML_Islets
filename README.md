@@ -2,7 +2,7 @@
 
 ## R version and packages
 R v 4.1.2 was used to develop the models. All the package versions can be found in the manuscript.
-Some of the key packages used are mentioned below- 
+Some of the key packages include- 
   ```install.packages("Seurat")```
   ```install.packages("xgboost")```
   ```install.packages("e1071")```
