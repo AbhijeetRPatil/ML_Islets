@@ -13,6 +13,9 @@ Some of the key packages used are mentioned below-
 The processed scRNA-seq dataset can be found here: https://hpap.pmacs.upenn.edu/  
 Users can load the processed single-cell RNA_seq data (Seurat .RDS object).
 
+## Differential Expression Analysis scripts
+The Differential Expression Analysis folder contains the scripts for performing differential expression analysis on either all cells (unannotated) or Pseudobulk.
+
 ## Machine Learning model scripts
 The Machine Learning model scripts folder contains the scripts for cell types, unannotated, and LOOCV analysis.
 
