@@ -18,7 +18,7 @@ Some of the key packages include-
   ```install.packages("doParallel")``` and others.
 
 ## Data
-The processed scRNA-seq dataset (Seurat .RDS object) can be found here: https://hpap.pmacs.upenn.edu/analysis.  
+The processed scRNA-seq dataset (Seurat .RDS object) is uploaded here: https://hpap.pmacs.upenn.edu/analysis.  
 
 ## Machine Learning model scripts
 The Machine Learning model scripts folder contains the scripts for cell types, unannotated, and LOOCV analysis.
