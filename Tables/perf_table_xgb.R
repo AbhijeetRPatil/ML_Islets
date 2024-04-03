@@ -7,7 +7,7 @@ library(gridExtra)
 library(dplyr)
 #######################################################################################
 ### Overall
-setwd("/mnt/alvand/abhijeet/aab/apr_WO-T2D/ml/res")
+setwd("./res")
 
 ## T1D vs Ctrl
 xgb_t1dvsctrl <- readRDS("xgb_t1dvsctrl.rds")
