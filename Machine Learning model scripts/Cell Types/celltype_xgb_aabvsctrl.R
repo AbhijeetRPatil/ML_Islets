@@ -6,7 +6,7 @@ library("Matrix")
 library("Seurat")
 library("parallel")
 ## current working directory 
-setwd("./res/")
+setwd("./")
 
 ## Load all funcitons
 source("/Libraries/celltypes_data_gen_aabvsctrl.R")
