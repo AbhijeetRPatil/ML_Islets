@@ -7,7 +7,7 @@ library("Seurat")
 library("parallel")
 library("caret")
 ## current working directory 
-setwd("/mnt/alvand/abhijeet/aab/apr_WO-T2D/ml/res/")
+setwd("")
 
 ## Load all funcitons
 source("/Libraries/data_gen_t1dvsctrl.R")
