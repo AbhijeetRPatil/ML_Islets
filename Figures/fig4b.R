@@ -3,7 +3,7 @@ library("dplyr")
 library("ggplot2")
 rm(list = ls())
 ## Load all functions required
-source("/mnt/alvand/abhijeet/aab/apr_WO-T2D/ml/progs/metrics-plots/fea-plot-lib.R")
+source("./fea-plot-lib.R")
 ## Set the path of cell type 
 #setwd("/mnt/alvand/abhijeet/aab/apr_WO-T2D/ml/plots/t1dvsctrl/beta/")
 setwd("/mnt/alvand/abhijeet/aab/apr_WO-T2D/ml/plots/revision/Fig4/")
