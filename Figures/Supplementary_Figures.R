@@ -1,5 +1,5 @@
 rm(list=ls())
-# setwd('/mnt/alvand/abhijeet/aab/apr_WO-T2D/ml/plots/revision/Fig1/')
+# setwd('/revision/Fig1/')
 library('Seurat')
 library("Seurat")
 library("dplyr")
