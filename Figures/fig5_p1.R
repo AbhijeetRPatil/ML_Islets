@@ -6,8 +6,8 @@ library("ggpubr")
 library("cowplot")
 library("dplyr")
 library("tidyverse")
-setwd("/mnt/alvand/abhijeet/aab/apr_WO-T2D/ml/plots/revision/Fig5/")
-source("/mnt/alvand/abhijeet/aab/apr_WO-T2D/ml/progs/top_geneex_functions.R")
+setwd("./plots/revision/Fig5/")
+source("./progs/top_geneex_functions.R")
 ################################## functions ##############################################################
 xtheme <- theme(plot.title = element_text(face = "bold" ,hjust = 0.5, size= 12)
                 ,axis.text.y = element_text(face = "bold",angle = 0, size = 10, hjust=1)
@@ -25,7 +25,7 @@ disease_order_combined <- c("Control", "AAB", "MC-AAB", "T1D")
 
 ################################################## Beta cells #################################################################
 ## MC
-cellbarcodes <- read.csv("/mnt/alvand/abhijeet/aab/apr_WO-T2D/ml/res/third/10_200cv/beta_cellbarcodes.csv")
+cellbarcodes <- read.csv("./res/third/10_200cv/beta_cellbarcodes.csv")
 cellX <- cellbarcodes$X
 
 ## subset the MC cells
@@ -49,7 +49,7 @@ dev.off()
 
 ################################################## Ductal cells #################################################################
 ## MC
-cellbarcodes <- read.csv("/mnt/alvand/abhijeet/aab/apr_WO-T2D/ml/res/third/10_200cv/ductal_cellbarcodes.csv")
+cellbarcodes <- read.csv("./res/third/10_200cv/ductal_cellbarcodes.csv")
 cellX <- cellbarcodes$X
 
 ## subset the MC cells
@@ -73,7 +73,7 @@ dev.off()
 
 ################################################## Acinar cells #################################################################
 ## MC
-cellbarcodes <- read.csv("/mnt/alvand/abhijeet/aab/apr_WO-T2D/ml/res/third/10_200cv/acinar_cellbarcodes.csv")
+cellbarcodes <- read.csv("./res/third/10_200cv/acinar_cellbarcodes.csv")
 cellX <- cellbarcodes$X
 
 ## subset the MC cells
@@ -97,7 +97,7 @@ dev.off()
 
 ################################################## Alpha cells #################################################################
 ## MC
-cellbarcodes <- read.csv("/mnt/alvand/abhijeet/aab/apr_WO-T2D/ml/res/third/10_200cv/alpha_cellbarcodes.csv")
+cellbarcodes <- read.csv("./res/third/10_200cv/alpha_cellbarcodes.csv")
 cellX <- cellbarcodes$X
 
 ## subset the MC cells
@@ -121,7 +121,7 @@ dev.off()
 
 ################################################## Immune cells #################################################################
 ## MC
-cellbarcodes <- read.csv("/mnt/alvand/abhijeet/aab/apr_WO-T2D/ml/res/third/10_200cv/immune_cellbarcodes.csv")
+cellbarcodes <- read.csv("./res/third/10_200cv/immune_cellbarcodes.csv")
 cellX <- cellbarcodes$X
 
 ## subset the MC cells
@@ -145,7 +145,7 @@ dev.off()
 
 ################################################## Endothelial cells #################################################################
 ## MC
-cellbarcodes <- read.csv("/mnt/alvand/abhijeet/aab/apr_WO-T2D/ml/res/third/10_200cv/endothelial_cellbarcodes.csv")
+cellbarcodes <- read.csv("./res/third/10_200cv/endothelial_cellbarcodes.csv")
 cellX <- cellbarcodes$X
 
 ## subset the MC cells
@@ -169,7 +169,7 @@ dev.off()
 
 ################################################## Stellates cells #################################################################
 ## MC
-cellbarcodes <- read.csv("/mnt/alvand/abhijeet/aab/apr_WO-T2D/ml/res/third/10_200cv/stellates_cellbarcodes.csv")
+cellbarcodes <- read.csv("./res/third/10_200cv/stellates_cellbarcodes.csv")
 cellX <- cellbarcodes$X
 
 ## subset the MC cells
@@ -193,7 +193,7 @@ dev.off()
 
 ################################################## Delta cells #################################################################
 ## MC
-cellbarcodes <- read.csv("/mnt/alvand/abhijeet/aab/apr_WO-T2D/ml/res/third/10_200cv/delta_cellbarcodes.csv")
+cellbarcodes <- read.csv("./res/third/10_200cv/delta_cellbarcodes.csv")
 cellX <- cellbarcodes$X
 
 ## subset the MC cells
