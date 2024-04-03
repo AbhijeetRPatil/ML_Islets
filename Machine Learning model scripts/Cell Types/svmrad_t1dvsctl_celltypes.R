@@ -14,7 +14,7 @@ library('foreach')
 library('e1071')
 library('SparseM')
 ## current working directory 
-setwd("/mnt/alvand/abhijeet/aab/apr_WO-T2D/ml/res/")
+setwd("./")
 
 ## Load all functions
 source("/Libraries/celltypes_data_gen_t1dvsctrl.R")
@@ -120,7 +120,7 @@ main = function(data, y, method, iter, ncores)
 }
 
 dat <- data.gen()
-iter=10
+iter=100
 ncores=1
 
 ## alpha
