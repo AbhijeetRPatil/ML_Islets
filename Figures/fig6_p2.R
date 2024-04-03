@@ -1,6 +1,5 @@
 rm(list = ls())
-#setwd("/mnt/alvand/abhijeet/aab/apr_WO-T2D/ml/plots/HLAI/beta")
-setwd("/mnt/alvand/abhijeet/aab/apr_WO-T2D/ml/plots/revision/Fig6/")
+setwd("./revision/Fig6/")
 ## Load required libraries
 library("Seurat")
 library("stringi")
@@ -13,7 +12,7 @@ library("ggplot2")
 library("gridExtra")
 ## Read data
 # local <- data.gen()
-local <- readRDS("/mnt/alvand/abhijeet/aab/apr_WO-T2D/objs/panc_raw_meta_filtered_sct_umap_WO-T2D_WO_RB_MT_04182022.rds")
+local <- readRDS("panc.rds")
 
 ## For HPAP092
 ## for 4 genes combined
