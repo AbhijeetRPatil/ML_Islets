@@ -7,7 +7,7 @@ library("Seurat")
 library("parallel")
 library("caret")
 ## current working directory 
-setwd("")
+setwd("./")
 
 ## Load all funcitons
 source("/Libraries/data_gen_t1dvsctrl.R")
