@@ -6,7 +6,7 @@ library("Matrix")
 library("Seurat")
 library("parallel")
 ## current working directory 
-setwd("")
+setwd("./")
 
 ## Load all functions
 source("/Libraries/data_gen_aabvsctrl.R")
