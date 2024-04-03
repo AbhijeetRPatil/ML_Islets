@@ -120,7 +120,7 @@ main = function(data, y, method, iter, ncores)
 }
 
 dat <- data.gen()
-iter=100
+iter=10
 ncores=1
 
 ## alpha
