@@ -5,14 +5,13 @@ rm(list = ls())
 ## Load all functions required
 source("./fea-plot-lib.R")
 ## Set the path of cell type 
-#setwd("/mnt/alvand/abhijeet/aab/apr_WO-T2D/ml/plots/t1dvsctrl/beta/")
-setwd("/mnt/alvand/abhijeet/aab/apr_WO-T2D/ml/plots/revision/Fig4/")
+setwd("./plots/revision/Fig4/")
 #############################################################################
 #############################################################################
 ### KEGG
 #############################################################################
 ## Without FDR corrected
-KEGG_t1dvsctrl <- read.csv("/mnt/alvand/abhijeet/aab/apr_WO-T2D/ml/csv/t1dvsctrl/beta/KEGG.tsv", sep = "\t")
+KEGG_t1dvsctrl <- read.csv("./csv/t1dvsctrl/beta/KEGG.tsv", sep = "\t")
 KEGG_t1dvsctrl <- concat.split.multiple(data = KEGG_t1dvsctrl, split.cols = c("Term"), seps = ":")
 colnames(KEGG_t1dvsctrl)[length(colnames(KEGG_t1dvsctrl))] = "KEGG_Pathways"
 ## Pass to function
@@ -25,7 +24,7 @@ dev.off()
 # 
 #############################################################################
 ## with FDR corrected
-KEGG_t1dvsctrl <- read.csv("/mnt/alvand/abhijeet/aab/apr_WO-T2D/ml/csv/t1dvsctrl/beta/KEGG.tsv", sep = "\t")
+KEGG_t1dvsctrl <- read.csv("./csv/t1dvsctrl/beta/KEGG.tsv", sep = "\t")
 KEGG_t1dvsctrl <- KEGG_t1dvsctrl %>%
   filter(FDR<0.05)
 KEGG_t1dvsctrl <- concat.split.multiple(data = KEGG_t1dvsctrl, split.cols = c("Term"), seps = ":")
@@ -43,7 +42,7 @@ dev.off()
 ### REACTOME
 #############################################################################
 ## Without FDR corrected
-REACTOME_t1dvsctrl <- read.csv("/mnt/alvand/abhijeet/aab/apr_WO-T2D/ml/csv/t1dvsctrl/beta/REACTOME.tsv", sep = "\t")
+REACTOME_t1dvsctrl <- read.csv("./csv/t1dvsctrl/beta/REACTOME.tsv", sep = "\t")
 REACTOME_t1dvsctrl <- concat.split.multiple(data = REACTOME_t1dvsctrl, split.cols = c("Term"), seps = "~")
 colnames(REACTOME_t1dvsctrl)[length(colnames(REACTOME_t1dvsctrl))] = "REACTOME_Pathways"
 ## Pass to function
@@ -55,7 +54,7 @@ REACTOME_plot(df, plot_title)
 dev.off()
 #############################################################################
 ## with FDR corrected
-REACTOME_t1dvsctrl <- read.csv("/mnt/alvand/abhijeet/aab/apr_WO-T2D/ml/csv/t1dvsctrl/beta/REACTOME.tsv", sep = "\t")
+REACTOME_t1dvsctrl <- read.csv("./csv/t1dvsctrl/beta/REACTOME.tsv", sep = "\t")
 REACTOME_t1dvsctrl <- REACTOME_t1dvsctrl %>%
   filter(FDR<0.05)
 REACTOME_t1dvsctrl <- concat.split.multiple(data = REACTOME_t1dvsctrl, split.cols = c("Term"), seps = "~")
@@ -72,7 +71,7 @@ dev.off()
 ### GO BP
 #################################################################################
 ## Without FDR corrected
-GO_BP_t1dvsctrl <- read.csv("/mnt/alvand/abhijeet/aab/apr_WO-T2D/ml/csv/t1dvsctrl/beta/GO_BP.tsv", sep="\t")
+GO_BP_t1dvsctrl <- read.csv("./csv/t1dvsctrl/beta/GO_BP.tsv", sep="\t")
 GO_BP_t1dvsctrl <- concat.split.multiple(data = GO_BP_t1dvsctrl, split.cols = c("Term"), seps = "~")
 colnames(GO_BP_t1dvsctrl)[length(colnames(GO_BP_t1dvsctrl))] = "GO_Term"
 ## Pass to function
@@ -84,7 +83,7 @@ GO_plot(df, plot_title)
 dev.off()
 #################################################################################
 ## With FDR corrected
-GO_BP_t1dvsctrl <- read.csv("/mnt/alvand/abhijeet/aab/apr_WO-T2D/ml/csv/t1dvsctrl/beta/GO_BP.tsv", sep="\t")
+GO_BP_t1dvsctrl <- read.csv("./csv/t1dvsctrl/beta/GO_BP.tsv", sep="\t")
 GO_BP_t1dvsctrl <- GO_BP_t1dvsctrl %>%
   filter(FDR<0.05)
 GO_BP_t1dvsctrl <- concat.split.multiple(data = GO_BP_t1dvsctrl, split.cols = c("Term"), seps = "~")
@@ -101,7 +100,7 @@ dev.off()
 ### GO CC
 #################################################################################
 ## Without FDR corrected
-GO_CC_t1dvsctrl <- read.csv("/mnt/alvand/abhijeet/aab/apr_WO-T2D/ml/csv/t1dvsctrl/beta/GO_CC.tsv", sep="\t")
+GO_CC_t1dvsctrl <- read.csv("./csv/t1dvsctrl/beta/GO_CC.tsv", sep="\t")
 GO_CC_t1dvsctrl <- concat.split.multiple(data = GO_CC_t1dvsctrl, split.cols = c("Term"), seps = "~")
 colnames(GO_CC_t1dvsctrl)[length(colnames(GO_CC_t1dvsctrl))] = "GO_Term"
 ## Pass to function
@@ -114,7 +113,7 @@ GO_plot(df, plot_title)
 dev.off()
 #################################################################################
 ## With FDR corrected
-GO_CC_t1dvsctrl <- read.csv("/mnt/alvand/abhijeet/aab/apr_WO-T2D/ml/csv/t1dvsctrl/beta/GO_CC.tsv", sep="\t")
+GO_CC_t1dvsctrl <- read.csv("./csv/t1dvsctrl/beta/GO_CC.tsv", sep="\t")
 GO_CC_t1dvsctrl <- GO_CC_t1dvsctrl %>%
   filter(FDR<0.05)
 GO_CC_t1dvsctrl <- concat.split.multiple(data = GO_CC_t1dvsctrl, split.cols = c("Term"), seps = "~")
@@ -132,7 +131,7 @@ dev.off()
 ### GO MF
 #################################################################################
 ## Without FDR corrected
-GO_MF_t1dvsctrl <- read.csv("/mnt/alvand/abhijeet/aab/apr_WO-T2D/ml/csv/t1dvsctrl/beta/GO_MF.tsv", sep="\t")
+GO_MF_t1dvsctrl <- read.csv("./csv/t1dvsctrl/beta/GO_MF.tsv", sep="\t")
 GO_MF_t1dvsctrl <- concat.split.multiple(data = GO_MF_t1dvsctrl, split.cols = c("Term"), seps = "~")
 colnames(GO_MF_t1dvsctrl)[length(colnames(GO_MF_t1dvsctrl))] = "GO_Term"
 ## Pass to function
@@ -145,7 +144,7 @@ GO_plot(df, plot_title)
 dev.off()
 #################################################################################
 ## With FDR corrected
-GO_MF_t1dvsctrl <- read.csv("/mnt/alvand/abhijeet/aab/apr_WO-T2D/ml/csv/t1dvsctrl/beta/GO_MF.tsv", sep="\t")
+GO_MF_t1dvsctrl <- read.csv("./csv/t1dvsctrl/beta/GO_MF.tsv", sep="\t")
 GO_MF_t1dvsctrl <- GO_MF_t1dvsctrl %>%
   filter(FDR<0.05)
 GO_MF_t1dvsctrl <- concat.split.multiple(data = GO_MF_t1dvsctrl, split.cols = c("Term"), seps = "~")
