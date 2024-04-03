@@ -1,5 +1,5 @@
 rm(list = ls())
-setwd("/mnt/alvand/abhijeet/aab/apr_WO-T2D/figures/metrics")
+setwd("./")
 library("Seurat")
 library("dplyr")
 library("Matrix")
