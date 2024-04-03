@@ -8,7 +8,6 @@ library("parallel")
 # library("pROC")
 ## current working directory 
 # setwd("C:/Users/abhij/Desktop/ML_New/")
-setwd("/mnt/alvand/abhijeet/aab/apr_WO-T2D/ml/res/")
 memory.limit(size=10000000)
 ## Load all functions
 # source("C:/Users/abhij/Desktop/ML_New/celltypes_data_gen_t1dvsaab.R")
