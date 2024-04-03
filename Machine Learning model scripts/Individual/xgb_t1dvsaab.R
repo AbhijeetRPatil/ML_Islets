@@ -6,7 +6,7 @@ library("Matrix")
 library("Seurat")
 library("parallel")
 ## current working directory 
-setwd("")
+setwd("./")
 
 ## Load all funcitons
 source("/Libraries/libs/data_gen_t1dvsaab.R")
